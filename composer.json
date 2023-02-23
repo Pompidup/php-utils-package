@@ -1,0 +1,44 @@
+{
+    "name": "cresh/helpers",
+    "description": "Helpers library for cms module",
+    "type": "library",
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Cresh Team",
+            "email": "tech@cresh.eu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cresh\\Helpers\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cresh\\Helpers\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.3"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.22",
+        "phpstan/phpstan": "^1.10"
+    },
+    "scripts": {
+        "analyse": "./vendor/bin/phpstan analyse src",
+        "test": "./vendor/bin/pest",
+        "test-coverage": "./vendor/bin/pest --coverage"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
