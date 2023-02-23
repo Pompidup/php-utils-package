@@ -7,7 +7,7 @@ namespace Cresh\Helpers\Address;
 use Cresh\Helpers\Contracts\AddressStrategyContract;
 use Cresh\Helpers\Contracts\MagentoAddressContract;
 
-class MagentoAddressStrategy implements AddressStrategyContract
+class MagentoAddressStrategy extends AddressStrategy implements AddressStrategyContract
 {
     /**
      * @param MagentoAddressContract $address
@@ -22,7 +22,7 @@ class MagentoAddressStrategy implements AddressStrategyContract
             'address_line1' => $address->getStreet()[0],
             'zipcode' => $address->getPostcode(),
             'city' => $address->getCity(),
-            'country' => 'FRA'
+            'country' => $this->convertCountryIdToAlpha3($address->getCountryId()),
         ];
         if (count($address->getStreet()) >= 2) {
             $object['address_line2'] = $address->getStreet()[1];

@@ -3,7 +3,9 @@
 use Cresh\Helpers\Contracts\MagentoAddressContract;
 use Cresh\Helpers\Helpers;
 
-class FakeMagentoAddress implements MagentoAddressContract {
+class FakeMagentoAddress implements MagentoAddressContract
+{
+    private $countryId = 'FR';
     public function getFirstname(): string
     {
         return 'John';
@@ -41,7 +43,12 @@ class FakeMagentoAddress implements MagentoAddressContract {
 
     public function getCountryId(): string
     {
-        return 'FR';
+        return $this->countryId;
+    }
+
+    public function setCountryId(string $countryId): void
+    {
+        $this->countryId = $countryId;
     }
 }
 
@@ -53,8 +60,15 @@ it('should create a new instance of Helpers', function () {
     expect($helpers)->toBeInstanceOf(Helpers::class);
 });
 
+it('should throw an exception if strategy is not found', function () {
+    try {
+        new Helpers('notfound');
+    } catch (Exception $e) {
+        throw $e;
+    }
+})->throws(Exception::class, 'Strategy not found');
 
-it('should format an address', function () {
+it('should format an Cresh address with Magento address', function () {
     // Arrange
     $fakeMagentoAddress = new FakeMagentoAddress();
 
@@ -74,6 +88,20 @@ it('should format an address', function () {
         'country' => 'FRA',
     ]);
 });
+
+it('should throw an exception if country is not found', function () {
+    // Arrange
+    $fakeMagentoAddress = new FakeMagentoAddress();
+    $fakeMagentoAddress->setCountryId('ZZ');
+
+    // Act
+    try {
+        $helpers = new Helpers('magento');
+        $formatted =  $helpers->formatAddress($fakeMagentoAddress);
+    } catch (Exception $e) {
+        throw $e;
+    }
+})->throws(Exception::class, 'Country not found');
 
 it('should generate a seal', function () {
     // Arrange

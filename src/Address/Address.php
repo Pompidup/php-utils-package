@@ -8,10 +8,11 @@ use Cresh\Helpers\Contracts\AddressContract;
 use Cresh\Helpers\Address\MagentoAddressStrategy;
 use Cresh\Helpers\Contracts\AddressStrategyContract;
 use Cresh\Helpers\Contracts\MagentoAddressContract;
+use Exception;
 
 class Address implements AddressContract
 {
-     /**
+    /**
      * @var AddressStrategyContract
      */
     private $strategy;
@@ -23,7 +24,7 @@ class Address implements AddressContract
                 $this->strategy = new MagentoAddressStrategy();
                 break;
             default:
-                throw new \Exception('Strategy not found');
+                throw new Exception('Strategy not found');
         }
     }
 
